@@ -13,7 +13,7 @@ const Gatherer = require('../gatherer.js');
 /* istanbul ignore next */
 async function getRobotsTxtContent() {
   try {
-    const response = await fetch(new URL('/robots.txt', location.href).href);
+    const response = await window.__nativeFetch(new URL('/robots.txt', location.href).href);
     if (!response.ok) {
       return {status: response.status, content: null};
     }
