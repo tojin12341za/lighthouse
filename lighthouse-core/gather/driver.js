@@ -1476,7 +1476,6 @@ class Driver {
         window.__nativeURL = URL;
         window.__ElementMatches = Element.prototype.matches;
         window.__perfNow = performance.now.bind(performance);
-        window.__nativeFetch = fetch;
     `);
   }
 
