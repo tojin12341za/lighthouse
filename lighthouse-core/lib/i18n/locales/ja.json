@@ -1491,7 +1491,7 @@
     "message": "Angular CLI を使用している場合は、ソースマップを本番環境用ビルドに含め、バンドルを調べられるようにします。[詳細](https://angular.io/guide/deployment#inspect-the-bundles)"
   },
   "stack-packs/packs/angular.js | uses_rel_preload": {
-    "message": "ナビゲーションの速度を向上するにはルートをプリロードします。[詳細](https://web.dev/route-preloading-in-angular/)"
+    "message": "ナビゲーションの速度を上げるにはルートをプリロードします。[詳細](https://web.dev/route-preloading-in-angular/)"
   },
   "stack-packs/packs/angular.js | uses_responsive_images": {
     "message": "画像のブレークポイントを管理するには、Component Dev Kit（CDK）の `BreakpointObserver` ユーティリティを使用することを検討してください。[詳細](https://material.angular.io/cdk/layout/overview)"
@@ -1581,13 +1581,13 @@
     "message": "ページで使用されていない JavaScript を読み込む [WordPress プラグイン](https://wordpress.org/plugins/)の数を減らすか、他のプラグインに切り替えることをご検討ください。不要な JavaScript を読み込んでいるプラグインを特定するには、Chrome DevTools で[コードの Coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) を確認します。スクリプトの URL から、該当のテーマやプラグインを特定できます。多くのスクリプトを使用しているプラグイン（コードの Coverage で赤色の部分が多いもの）をリストで探します。プラグインによってキューに追加されるスクリプトは、実際にページで使用されるもののみにする必要があります。"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "[WordPress のブラウザ キャッシング](https://wordpress.org/support/article/optimization/#browser-caching)についてご確認ください。"
+    "message": "[WordPress のブラウザ キャッシング](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)についてご確認ください。"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "画質を落とさずに画像を圧縮できる [WordPress の画像最適化プラグイン](https://wordpress.org/plugins/search/optimize+images/)の使用をご検討ください。"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "[メディア ライブラリ](https://wordpress.org/support/article/media-library-screen/)から直接画像をアップロードして必要な画像サイズを利用できるようにしたうえで、メディア ライブラリから挿入するか、画像ウィジェットを使用して、最適な画像サイズ（レスポンシブ ブレークポイントのサイズを含む）が使用されるようにします。「`Full Size`」の画像は、十分なスペースがある場合を除いて使用しないようにします。[詳細](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
+    "message": "[メディア ライブラリ](https://codex.wordpress.org/Media_Library_Screen)から直接画像をアップロードして必要な画像サイズを利用できるようにしたうえで、メディア ライブラリから挿入するか、画像ウィジェットを使用して、最適な画像サイズ（レスポンシブ ブレークポイントのサイズを含む）が使用されるようにします。「`Full Size`」の画像は、十分なスペースがある場合を除いて使用しないようにします。[詳細](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "ウェブサーバーの設定でテキスト圧縮を有効にできます。"

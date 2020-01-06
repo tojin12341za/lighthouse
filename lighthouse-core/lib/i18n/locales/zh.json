@@ -513,7 +513,7 @@
     "message": "值"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "大型 DOM 会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)费用。[了解详情](https://web.dev/dom-size)。"
+    "message": "大型 DOM 会增加内存使用量、导致[样式计算](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations)用时延长，并产生高昂的[布局重排](https://developers.google.com/speed/articles/reflow)成本。[了解详情](https://web.dev/dom-size)。"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 个元素}other{# 个元素}}"
@@ -1470,7 +1470,7 @@
     "message": "使用 [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) 之类的工具[在服务器端呈现 AMP 布局](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)。"
   },
   "stack-packs/packs/amp.js | unminified_css": {
-    "message": "请参阅 [AMP 文档](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)以确保所有样式均受支持。"
+    "message": "请参阅 [AMP 文档](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)以确保您的所有样式均受支持。"
   },
   "stack-packs/packs/amp.js | uses_responsive_images": {
     "message": "`amp-img` 元素支持 `srcset` 属性，以便系统根据屏幕尺寸指定要使用的图片资源。[了解详情](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)。"
@@ -1482,7 +1482,7 @@
     "message": "如果要呈现的列表非常大，您不妨使用 Component Dev Kit (CDK) 进行虚拟滚动。[了解详情](https://web.dev/virtualize-lists-with-angular-cdk/)。"
   },
   "stack-packs/packs/angular.js | total_byte_weight": {
-    "message": "应用[路径级代码拆分](https://web.dev/route-level-code-splitting-in-angular/)，以尽量压缩 JavaScript 软件包的大小。您也可考虑使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 预缓存资源。"
+    "message": "采用[路径级代码拆分](https://web.dev/route-level-code-splitting-in-angular/)，以尽量压缩 JavaScript 软件包的大小。您也可考虑使用 [Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/) 预缓存资源。"
   },
   "stack-packs/packs/angular.js | unminified_warning": {
     "message": "如果您使用的是 Angular CLI，请确保在正式版模式下生成版本。[了解详情](https://angular.io/guide/deployment#enable-runtime-production-mode)。"
@@ -1536,7 +1536,7 @@
     "message": "如果您要在页面上呈现很多重复元素，不妨使用“windowing”库（如 `react-window`）以尽量减少所创建的 DOM 节点数。[了解详情](https://web.dev/virtualize-long-lists-react-window/)。此外，如果您使用 Effect 钩子提高运行时性能，则还要使用 [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action)、[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) 或 [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) 及[跳过效果](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects)以尽量减少不必要的重复呈现，直到某些依赖项发生更改为止。"
   },
   "stack-packs/packs/react.js | redirects": {
-    "message": "如果您使用的是 React Router，请尽量避免使用 `<Redirect>` 组件进行[路径导航](https://reacttraining.com/react-router/web/api/Redirect)。"
+    "message": "如果您使用了 React Router，请尽量避免使用 `<Redirect>` 组件进行[路径导航](https://reacttraining.com/react-router/web/api/Redirect)。"
   },
   "stack-packs/packs/react.js | time_to_first_byte": {
     "message": "如果您在服务器端呈现任何 React 组件，不妨使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()` 来允许客户端接收并合成标记的各个不同部分，而不是一次性接收整个标记。[了解详情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
@@ -1551,7 +1551,7 @@
     "message": "如果您不使用服务器端呈现，请使用 `React.lazy()` [拆分 JavaScript 软件包](https://web.dev/code-splitting-suspense/)。否则，请使用第三方库（如 [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)）拆分代码。"
   },
   "stack-packs/packs/react.js | user_timings": {
-    "message": "使用 React DevTools Profiler，从而利用 Profiler API 来衡量组件的呈现效果。[了解详情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
+    "message": "使用 React DevTools Profiler，从而利用 Profiler API 来衡量组件的呈现性能。[了解详情](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)。"
   },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "建议您将 GIF 上传到可让其作为 HTML5 视频嵌入的服务。"
@@ -1581,13 +1581,13 @@
     "message": "建议您减少或改变会在您网页中加载未使用的 JavaScript 的 [WordPress 插件](https://wordpress.org/plugins/)的数量。若想找出会添加无关 JS 的插件，请尝试在 Chrome DevTools 中运行[代码覆盖率](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage)测试。您可根据脚本网址找出导致问题的主题背景/插件。请留意在列表中包含多个以大量红色显示代码覆盖率的脚本的插件。插件应只将网页中确实用到的脚本加入队列。"
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "了解 [WordPress 中的浏览器缓存](https://wordpress.org/support/article/optimization/#browser-caching)。"
+    "message": "了解 [WordPress 中的浏览器缓存](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)。"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "建议您使用[图片优化 WordPress 插件](https://wordpress.org/plugins/search/optimize+images/)，以在不影响图片质量的前提下压缩图片大小。"
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "直接通过[媒体库](https://wordpress.org/support/article/media-library-screen/)上传图片，以确保能够按要求的尺寸提供图片，然后从媒体库插入图片，或使用图片微件来确保采用最佳的图片尺寸（包括适用于自适应断点的尺寸）。避免使用 `Full Size` 图片，除非有足够的可用空间。[了解详情](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)。"
+    "message": "直接通过[媒体库](https://codex.wordpress.org/Media_Library_Screen)上传图片，以确保能够按要求的尺寸提供图片，然后从媒体库插入图片，或使用图片微件来确保采用最佳的图片尺寸（包括适用于自适应断点的尺寸）。避免使用 `Full Size` 图片，除非有足够的可用空间。[了解详情](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)。"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "您可以在网络服务器配置中启用文本压缩。"

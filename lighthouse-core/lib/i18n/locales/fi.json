@@ -666,7 +666,7 @@
     "message": "Konsoliin ei kirjattu selainvirheitä"
   },
   "lighthouse-core/audits/font-display.js | description": {
-    "message": "Käytä CSS:n kirjasimennäyttöominaisuutta, jotta voit varmistaa, että käyttäjä näkee tekstin myös verkkofonttien lataamisen aikana. [Lue lisää](https://web.dev/font-display)."
+    "message": "Käytä CSS:n fontinnäyttöominaisuutta, jotta voit varmistaa, että käyttäjä näkee tekstin myös verkkofonttien lataamisen aikana. [Lue lisää](https://web.dev/font-display)."
   },
   "lighthouse-core/audits/font-display.js | failureTitle": {
     "message": "Varmista, että teksti pysyy näkyvissä verkkofontin lataamisen aikana"
@@ -675,7 +675,7 @@
     "message": "Kaikki teksti pysyy näkyvissä verkkofontin lataamisen aikana"
   },
   "lighthouse-core/audits/font-display.js | undeclaredFontURLWarning": {
-    "message": "Lighthouse ei pystynyt tarkistamaan seuraavan URL-osoitteen kirjasimennäyttöarvoa automaattisesti: {fontURL}."
+    "message": "Lighthouse ei pystynyt tarkistamaan seuraavan URL-osoitteen fontinnäyttöarvoa automaattisesti: {fontURL}."
   },
   "lighthouse-core/audits/image-aspect-ratio.js | columnActual": {
     "message": "Kuvasuhde (todellinen)"
@@ -876,7 +876,7 @@
     "message": "Dokumentissa on kelvollinen `rel=canonical`"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
-    "message": "Alle 12 pikselin kirjasinkoot ovat liian pieniä luettavaksi ja edellyttävät mobiilivierailijoiden zoomaavan nipistämällä voidakseen lukea. Pyri siihen, että >60 % sivun tekstistä on ≥12 px. [Lue lisää](https://web.dev/font-size)."
+    "message": "Alle 12 pikselin fonttikoot ovat liian pieniä luettavaksi ja edellyttävät mobiilivierailijoiden zoomaavan nipistämällä voidakseen lukea. Pyri siihen, että >60 % sivun tekstistä on ≥12 px. [Lue lisää](https://web.dev/font-size)."
   },
   "lighthouse-core/audits/seo/font-size.js | displayValue": {
     "message": "{decimalProportion, number, extendedPercent} lukukelpoista tekstiä"
@@ -888,10 +888,10 @@
     "message": "{decimalProportion, number, extendedPercent} tekstistä on liian pientä (perustuen {decimalProportionVisited, number, extendedPercent}:n näytteeseen)."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
-    "message": "Dokumentissa ei käytetä lukukelpoisia kirjasinkokoja"
+    "message": "Dokumentissa ei käytetä lukukelpoisia fonttikokoja"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
-    "message": "Dokumentti käyttää lukukelpoisia kirjasinkokoja"
+    "message": "Dokumentti käyttää lukukelpoisia fonttikokoja"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
     "message": "hreflang-linkit kertovat hakukoneille, mikä sivuversio niiden pitäisi lisätä tietyn kielen tai alueen hakutuloksiin. [Lue lisää](https://web.dev/hreflang)."
@@ -1323,7 +1323,7 @@
     "message": "Dokumentti"
   },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
-    "message": "Kirjasin"
+    "message": "Fontti"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Kuva"
@@ -1581,13 +1581,13 @@
     "message": "Sinun kannattaa ehkä poistaa tai vaihtaa toisiin [WordPress-laajennuksia](https://wordpress.org/plugins/), jotka lataavat sivulla käyttämätöntä JavaScriptiä. Etsi tarpeetonta JS:ää lisääviä laajennuksia [tutkimalla koodin testikattavuutta](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) Chromen DevToolsissa. Löydät syynä olevan teeman tai laajennuksen skriptin URL-osoitteen avulla. Etsi laajennuksia, joilla on monia skriptejä luettelossa ja paljon punaista koodin testikattavuudessa. Laajennuksen pitäisi lisätä skripti jonoon vain, jos sitä todella käytetään sivulla."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Lue lisää [selaimen välimuistin käytöstä WordPressissä](https://wordpress.org/support/article/optimization/#browser-caching)."
+    "message": "Lue lisää [selaimen välimuistin käytöstä WordPressissä](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Harkitse [WordPressin kuvaoptimointilaajennusta](https://wordpress.org/plugins/search/optimize+images/), joka pakkaa kuvat mutta säilyttää niiden laadun."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Lataa kuvat suoraan [mediakirjastosta](https://wordpress.org/support/article/media-library-screen/), jolloin oikeat kuvakoot ovat varmasti saatavilla, ja lisää ne kuvakirjastosta tai varmista oikeiden kuvakokojen käyttö kuva-widgetillä (myös responsiivisuuden raja-arvojen kohdalla). Älä käytä kuvia, joiden koko on `Full Size`, paitsi jos sivun koko on riittävä. [Lue lisää](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
+    "message": "Lataa kuvat suoraan [mediakirjastosta](https://codex.wordpress.org/Media_Library_Screen), jolloin oikeat kuvakoot ovat varmasti saatavilla, ja lisää ne kuvakirjastosta tai varmista oikeiden kuvakokojen käyttö kuva-widgetillä (myös responsiivisuuden raja-arvojen kohdalla). Älä käytä kuvia, joiden koko on `Full Size`, paitsi jos sivun koko on riittävä. [Lue lisää](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Voit ottaa tekstin pakkaamisen käyttöön palvelimen määrityksistä."

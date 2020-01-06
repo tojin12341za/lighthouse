@@ -1464,7 +1464,7 @@
     "message": "ऐनिमेशन वाली सामग्री के लिए, [amp-anim](https://amp.dev/documentation/components/amp-anim/) का इस्तेमाल करें. इससे सामग्री के ऑफ़स्क्रीन होने पर सीपीयू का इस्तेमाल कम होगा."
   },
   "stack-packs/packs/amp.js | offscreen_images": {
-    "message": "पक्का करें कि आप अपनी उन इमेज के लिए सही `amp-img` टैग इस्तेमाल कर रहे हैं, जो पहले व्यूपोर्ट के बाहर अपने आप धीमी रफ़्तार से लोड होते हैं. [ज़्यादा जानें](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+    "message": "पक्का करें कि आप अपनी उन इमेज के लिए सही `amp-img` टैग इस्तेमाल कर रहे हैं, जो पहले व्यूपोर्ट के बाहर अपने-आप धीमी रफ़्तार से लोड होते हैं. [ज़्यादा जानें](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "stack-packs/packs/amp.js | render_blocking_resources": {
     "message": "[एएमपी लेआउट को सर्वर-साइड पर रेंडर करने](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) के लिए, [एएमपी ऑप्टिमाइज़र](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) जैसे टूल इस्तेमाल करें."
@@ -1533,19 +1533,19 @@
     "message": "तीसरे पक्ष के कई तरह के एक्सटेंशन [Magento मार्केटप्लेस](https://marketplace.magento.com/catalogsearch/result/?q=webp) में खोजें, ताकि आप नए इमेज फ़ॉर्मैट का फ़ायदा पा सकें."
   },
   "stack-packs/packs/react.js | dom_size": {
-    "message": "अगर आप पेज पर कई एलिमेंट एक से ज़्यादा बार रेंडर कर रहे हैं, तो बनाए गए DOM नोड की संख्या कम करने के लिए `react-window` जैसी \"छोटी विंडो वाली\" लाइब्रेरी का इस्तेमाल करें. [ज़्यादा जानें](https://web.dev/virtualize-long-lists-react-window/). इसके अलावा, ज़रूरी न होने पर बार-बार रेंडर करने से बचने के लिए, [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), [React.memo](https://reactjs.org/docs/react-api.html#reactmemo), और [इफ़ेक्ट छोड़ें](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) का इस्तेमाल करें. ऐसा तब तक करें, जब तक कुछ और करने की ज़रूरत न हो. साथ ही, जब आप रनटाइम परफ़ॉर्मेंस बेहतर करने के लिए इफ़ेक्ट हुक का इस्तेमाल कर रहे हों."
+    "message": "अगर आप पेज पर कई एलिमेंट एक से ज़्यादा बार रेंडर कर रहे हैं, तो बनाए गए DOM नोड की संख्या कम करने के लिए `react-window` जैसी \"छोटी विंडो वाली\" लाइब्रेरी का इस्तेमाल करें. [ज़्यादा जानें](https://web.dev/virtualize-long-lists-react-window/). इसके अलावा, ज़रूरी न होने पर बार-बार रेंडर करने से बचने के लिए, [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) या [React.memo](https://reactjs.org/docs/react-api.html#reactmemo), और [इफ़ेक्ट छोड़ें](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) का इस्तेमाल करें. ऐसा तब तक करें, जब तक कुछ और करने की ज़रूरत न हो. साथ ही, जब आप रनटाइम परफ़ॉर्मेंस बेहतर करने के लिए इफ़ेक्ट हुक का इस्तेमाल कर रहे हों."
   },
   "stack-packs/packs/react.js | redirects": {
-    "message": "अगर आप React राऊटर इस्तेमाल कर रहे हैं, तो [रूट नेविगेशन](https://reacttraining.com/react-router/web/api/Redirect) के लिए `<Redirect>` कॉम्पोनेंट का इस्तेमाल कम करें."
+    "message": "अगर आप React Router इस्तेमाल कर रहे हैं, तो [रूट नेविगेशन](https://reacttraining.com/react-router/web/api/Redirect) के लिए `<Redirect>` कॉम्पोनेंट का इस्तेमाल कम करें."
   },
   "stack-packs/packs/react.js | time_to_first_byte": {
     "message": "अगर आप सर्वर-साइड पर किसी React कॉम्पोनेंट को रेंडर कर रहे हैं, तो `renderToNodeStream()` या `renderToStaticNodeStream()` का इस्तेमाल करें. इससे क्लाइंट को एक साथ पूरे मार्कअप के बजाय, उसके अलग-अलग हिस्से मिलेंगे और वह उन्हें अलग-अलग हाइड्रेट कर पाएगा. [ज़्यादा जानें](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "stack-packs/packs/react.js | unminified_css": {
-    "message": "अगर आपका बिल्ड सिस्टम आपकी सीएसएस फ़ाइलों को अपने आप छोटा कर रहा है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "अगर आपका बिल्ड सिस्टम आपकी सीएसएस फ़ाइलों को अपने-आप छोटा कर रहा है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "stack-packs/packs/react.js | unminified_javascript": {
-    "message": "अगर आपका बिल्ड सिस्टम आपकी JS फ़ाइलों को अपने आप छोटा करता है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "अगर आपका बिल्ड सिस्टम आपकी JS फ़ाइलों को अपने-आप छोटा करता है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "stack-packs/packs/react.js | unused_javascript": {
     "message": "अगर आप सर्वर-साइड पर रेंडर नहीं कर रहे हैं, तो `React.lazy()` के साथ [अपने JavaScript बंडलों को अलग-अलग करें](https://web.dev/code-splitting-suspense/). इसके अलावा, आप तीसरे पक्ष की लाइब्रेरी का इस्तेमाल करके कोड को अलग-अलग कर सकते हैं, जैसे कि [वे कॉम्पोनेंट जो लोड हो सकते हैं](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
@@ -1581,13 +1581,13 @@
     "message": "उन [WordPress प्लग इन](https://wordpress.org/plugins/) की संख्या कम करके या स्विच करके देखें जो आपके पेज में ऐसी JavaScript लोड कर रहे हैं जिसका कभी इस्तेमाल नहीं हुआ. Chrome DevTools में [कोड कवरेज](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) चलाकर उन प्लग इन की पहचान करें जो आपके पेज में गैर-ज़रूरी JS जोड़ रहे हैं. आप स्क्रिप्ट के यूआरएल से पहचान सकते हैं कि ऐसा किस थीम/प्लग इन ने किया. ऐसे प्लग इन खोजें जिनके पास उस सूची में कई स्क्रिप्ट हैं जिसमें कोड कवरेज में बहुत से लाल निशान हैं. प्लग इन को स्क्रिप्ट तभी क्यू में लगानी चाहिए, अगर पेज पर उसका वाकई इस्तेमाल किया गया हो."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "[WordPress में ब्राउज़र कैशिंग](https://wordpress.org/support/article/optimization/#browser-caching) के बारे में पढ़ें."
+    "message": "[WordPress में ब्राउज़र कैशिंग](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching) के बारे में पढ़ें."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "ऐसे [इमेज ऑप्टिमाइज़ेशन WordPress प्लग इन](https://wordpress.org/plugins/search/optimize+images/) का इस्तेमाल करें जो आपकी क्वालिटी बरकरार रखते हुए आपकी इमेज कंप्रेस करता है."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "[मीडिया लाइब्रेरी](https://wordpress.org/support/article/media-library-screen/) की मदद से इमेज सीधे अपलोड करें, ताकि आप यह पक्का कर सकें कि आपके पास इमेज के वे आकार मौजूद हैं जिनकी आपको ज़रूरत पड़ेगी. इसके बाद, उन्हें डालने के लिए मीडिया लाइब्रेरी या इमेज विजेट का इस्तेमाल करें, ताकि आप यह पक्का कर सकें कि सबसे बेहतर इमेज आकारों का इस्तेमाल किया गया है (इसमें जवाब देने वाले ब्रेकपॉइंट की इमेज भी शामिल हैं). `Full Size` इमेज का इस्तेमाल तब तक न करें जब तक डाइमेंशन उनके इस्तेमाल के हिसाब से ठीक न हों. [ज़्यादा जानें](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
+    "message": "[मीडिया लाइब्रेरी](https://codex.wordpress.org/Media_Library_Screen) की मदद से इमेज सीधे अपलोड करें, ताकि आप यह पक्का कर सकें कि आपके पास इमेज के वे आकार मौजूद हैं जिनकी आपको ज़रूरत पड़ेगी. इसके बाद, उन्हें डालने के लिए मीडिया लाइब्रेरी या इमेज विजेट का इस्तेमाल करें, ताकि आप यह पक्का कर सकें कि सबसे बेहतर इमेज आकारों का इस्तेमाल किया गया है (इसमें जवाब देने वाले ब्रेकपॉइंट की इमेज भी शामिल हैं). `Full Size` इमेज का इस्तेमाल तब तक न करें जब तक डाइमेंशन उनके इस्तेमाल के हिसाब से ठीक न हों. [ज़्यादा जानें](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "आप अपने वेब सर्वर कॉन्फ़िगरेशन में टेक्स्ट कंप्रेस करने की सुविधा चालू कर सकते हैं."
