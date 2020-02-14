@@ -5,24 +5,32 @@
  */
 'use strict';
 
-const cacheBuster = Number(new Date());
-
 /**
  * @type {Array<Smokehouse.ExpectedRunnerResult>}
  * Expected Lighthouse audit values for redirects tests
  */
 const expectations = [
   {
+    // Single server-side redirect (2s)
     lhr: {
-      requestedUrl: `http://localhost:10200/online-only.html?delay=500&redirect=%2Foffline-only.html%3Fcb=${cacheBuster}%26delay=500%26redirect%3D%2Fredirects-final.html`,
+      requestedUrl: `http://localhost:10200/online-only.html?delay=2000&redirect=%2Fredirects-final.html`,
       finalUrl: 'http://localhost:10200/redirects-final.html',
       audits: {
+        'first-contentful-paint': {
+          numericValue: '>=2000',
+        },
+        'interactive': {
+          numericValue: '>=2000',
+        },
+        'speed-index': {
+          numericValue: '>=2000',
+        },
         'redirects': {
-          score: '<1',
-          numericValue: '>=500',
+          score: 1,
+          numericValue: '>=2000',
           details: {
             items: {
-              length: 3,
+              length: 2,
             },
           },
         },
@@ -33,13 +41,45 @@ const expectations = [
     },
   },
   {
+    // Multiple server-side redirects (3 x 1s)
     lhr: {
-      requestedUrl: `http://localhost:10200/online-only.html?delay=300&redirect=%2Fredirects-final.html`,
+      requestedUrl: `http://localhost:10200/online-only.html?delay=1000&redirect_count=3&redirect=%2Fredirects-final.html`,
+      finalUrl: 'http://localhost:10200/redirects-final.html',
+      audits: {
+        'first-contentful-paint': {
+          numericValue: '>=3000',
+        },
+        'interactive': {
+          numericValue: '>=3000',
+        },
+        'speed-index': {
+          numericValue: '>=3000',
+        },
+        'redirects': {
+          score: '<1',
+          numericValue: '>=3000',
+          details: {
+            items: {
+              length: 4,
+            },
+          },
+        },
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
+    },
+  },
+  {
+    // Client-side redirect (2s + 5s), no paint
+    // TODO: Assert performance metrics on client-side redirects, see https://github.com/GoogleChrome/lighthouse/pull/10325
+    lhr: {
+      requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fredirects-final.html`,
       finalUrl: 'http://localhost:10200/redirects-final.html',
       audits: {
         'redirects': {
           score: 1,
-          numericValue: '>=250',
+          numericValue: '>=7000',
           details: {
             items: {
               length: 2,
@@ -48,7 +88,39 @@ const expectations = [
         },
       },
       runWarnings: [
-        /The page may not be loading as expected because your test URL \(.*online-only.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+        /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      ],
+    },
+  },
+  {
+    // Client-side redirect (2s + 5s), paints at 2s, server-side redirect (1s)
+    // TODO: Assert performance metrics on client-side redirects, see https://github.com/GoogleChrome/lighthouse/pull/10325
+    lhr: {
+      requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fonline-only.html%3Fdelay%3D1000%26redirect%3D%2Fredirects-final.html`,
+      finalUrl: 'http://localhost:10200/redirects-final.html',
+      audits: {
+        // Just captures the server-side at the moment, should be 8s in the future
+        'first-contentful-paint': {
+          numericValue: '>=1000',
+        },
+        'interactive': {
+          numericValue: '>=1000',
+        },
+        'speed-index': {
+          numericValue: '>=1000',
+        },
+        'redirects': {
+          score: '<1',
+          numericValue: '>=8000',
+          details: {
+            items: {
+              length: 3,
+            },
+          },
+        },
+      },
+      runWarnings: [
+        /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
       ],
     },
   },

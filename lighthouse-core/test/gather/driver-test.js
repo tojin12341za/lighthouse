@@ -482,60 +482,70 @@ describe('.gotoURL', () => {
       .mockResponse('Runtime.evaluate');
   });
 
-  it('will track redirects through gotoURL load', async () => {
-    const delay = () => new Promise(resolve => setTimeout(resolve));
+  for (const finalUrlSource of ['network', 'window.location']) {
+    it(`will track redirects through gotoURL via ${finalUrlSource}`, async () => {
+      const delay = () => new Promise(resolve => setTimeout(resolve));
 
-    class ReplayConnection extends Connection {
-      connect() {
-        return Promise.resolve();
-      }
-      disconnect() {
-        return Promise.resolve();
-      }
-      replayLog() {
-        redirectDevtoolsLog.forEach(msg => this.emitProtocolEvent(msg));
-      }
-      /**
-       * @param {string} method
-       * @param {any} _
-       */
-      sendCommand(method, _) {
-        const resolve = Promise.resolve();
-
-        // If navigating, wait, then replay devtools log in parallel to resolve.
-        if (method === 'Page.navigate') {
-          resolve.then(delay).then(_ => this.replayLog());
+      class ReplayConnection extends Connection {
+        connect() {
+          return Promise.resolve();
         }
+        disconnect() {
+          return Promise.resolve();
+        }
+        replayLog() {
+          redirectDevtoolsLog.forEach(msg => this.emitProtocolEvent(msg));
+        }
+        /**
+         * @param {string} method
+         * @param {any} _
+         */
+        sendCommand(method, _) {
+          const resolve = Promise.resolve();
 
-        return resolve;
+          // If navigating, wait, then replay devtools log in parallel to resolve.
+          if (method === 'Page.navigate') {
+            resolve.then(delay).then(_ => this.replayLog());
+          }
+
+          return resolve;
+        }
       }
-    }
-    const replayConnection = new ReplayConnection();
+      const replayConnection = new ReplayConnection();
 
-    const driver = /** @type {TestDriver} */ (new Driver(replayConnection));
+      const driver = /** @type {TestDriver} */ (new Driver(replayConnection));
+      const evalauteAsync = driver.evaluateAsync.bind(driver);
+      driver.evaluateAsync = (expression, options) => {
+        if (!expression.includes('window.location')) return evalauteAsync(expression, options);
+        if (finalUrlSource === 'network') return Promise.reject(new Error('Oops'));
+        return Promise.resolve('https://js-redirected-url.com/');
+      }
 
-    // Redirect in log will go through
-    const startUrl = 'http://en.wikipedia.org/';
-    // then https://en.wikipedia.org/
-    // then https://en.wikipedia.org/wiki/Main_Page
-    const finalUrl = 'https://en.m.wikipedia.org/wiki/Main_Page';
+      // Redirect in log will go through
+      const startUrl = 'http://en.wikipedia.org/';
+      // then https://en.wikipedia.org/
+      // then https://en.wikipedia.org/wiki/Main_Page
+      const finalUrl = finalUrlSource === 'network' ?
+        'https://en.m.wikipedia.org/wiki/Main_Page' :
+        'https://js-redirected-url.com/';
 
-    const loadOptions = {
-      waitForLoad: true,
-      passContext: {
-        passConfig: {
-          pauseAfterLoadMs: 0,
-          networkQuietThresholdMs: 0,
-          cpuQuietThresholdMs: 0,
+      const loadOptions = {
+        waitForLoad: true,
+        passContext: {
+          passConfig: {
+            pauseAfterLoadMs: 0,
+            networkQuietThresholdMs: 0,
+            cpuQuietThresholdMs: 0,
+          },
         },
-      },
-    };
-    const loadPromise = driver.gotoURL(startUrl, loadOptions);
+      };
+      const loadPromise = driver.gotoURL(startUrl, loadOptions);
 
-    await flushAllTimersAndMicrotasks();
-    const loadedUrl = await loadPromise;
-    expect(loadedUrl).toEqual(finalUrl);
-  });
+      await flushAllTimersAndMicrotasks();
+      const loadedUrl = await loadPromise;
+      expect(loadedUrl).toEqual(finalUrl);
+    });
+  }
 
   describe('when waitForNavigated', () => {
     it('waits for Page.frameNavigated', async () => {
