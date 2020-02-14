@@ -519,7 +519,7 @@ describe('.gotoURL', () => {
         if (!expression.includes('window.location')) return evalauteAsync(expression, options);
         if (finalUrlSource === 'network') return Promise.reject(new Error('Oops'));
         return Promise.resolve('https://js-redirected-url.com/');
-      }
+      };
 
       // Redirect in log will go through
       const startUrl = 'http://en.wikipedia.org/';
