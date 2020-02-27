@@ -126,7 +126,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         const topUnusedSourceSizes = Object.entries(unusedJsSummary.sourcesWastedBytes)
           .slice(0, 5)
           .map(([source, unused]) => {
-            const total = source === '(unmapped)' ? bundle.sizes.unmappedBytes : bundle.sizes.files[source];
+            const total =
+              source === '(unmapped)' ? bundle.sizes.unmappedBytes : bundle.sizes.files[source];
             return {source, unused, total};
           })
           .filter(d => d.unused >= bundleSourceUnusedThreshold);

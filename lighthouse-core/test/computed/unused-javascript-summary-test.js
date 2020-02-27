@@ -6,7 +6,6 @@
 'use strict';
 
 const assert = require('assert');
-const fs = require('fs');
 const UnusedJavaScriptSummary = require('../../computed/unused-javascript-summary.js');
 
 /* eslint-env jest */
