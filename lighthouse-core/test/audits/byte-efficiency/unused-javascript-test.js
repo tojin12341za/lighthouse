@@ -104,7 +104,7 @@ describe('UnusedJavaScript audit', () => {
     const context = {
       computedCache: new Map(),
       options: {
-        // Default threshold is 1024, but is lowered here so that squoosh actually generates
+        // Default threshold is 512, but is lowered here so that squoosh generates more
         // results.
         // TODO(cjamcl): the bundle visualization feature will require most of the logic currently
         // done in unused-javascript to be moved to a computed artifact. When that happens, these
