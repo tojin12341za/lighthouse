@@ -10,7 +10,7 @@ const UnusedJavaScriptSummary = require('../../computed/unused-javascript-summar
 
 /* eslint-env jest */
 
-function generateUsage(url, ranges, transferSize = 1000) {
+function generateUsage(url, ranges) {
   const functions = ranges.map(range => {
     return {
       ranges: [
@@ -23,7 +23,7 @@ function generateUsage(url, ranges, transferSize = 1000) {
     };
   });
 
-  return {url, functions, networkRecord: {transferSize}};
+  return {url, functions};
 }
 
 describe('UnusedJavaScriptSummary computed artifact', () => {

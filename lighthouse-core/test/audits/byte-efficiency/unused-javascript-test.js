@@ -43,7 +43,7 @@ function generateRecord(url, transferSize, resourceType) {
   return {url, transferSize, resourceType};
 }
 
-function generateUsage(url, ranges, transferSize = 1000) {
+function generateUsage(url, ranges) {
   const functions = ranges.map(range => {
     return {
       ranges: [
@@ -56,7 +56,7 @@ function generateUsage(url, ranges, transferSize = 1000) {
     };
   });
 
-  return {url, functions, networkRecord: {transferSize}};
+  return {url, functions};
 }
 
 function makeJsUsage(...usages) {
@@ -71,7 +71,7 @@ describe('UnusedJavaScript audit', () => {
   const domain = 'https://www.google.com';
   const scriptUnknown = generateUsage(domain, [[0, 3000, false]]);
   const scriptA = generateUsage(`${domain}/scriptA.js`, [[0, 100, true]]);
-  const scriptB = generateUsage(`${domain}/scriptB.js`, [[0, 200, true], [0, 50, false]]);
+  const scriptB = generateUsage(`${domain}/scriptB.js`, [[0, 20000, true], [0, 5000, false]]);
   const inlineA = generateUsage(`${domain}/inline.html`, [[0, 5000, true], [5000, 6000, false]]);
   const inlineB = generateUsage(`${domain}/inline.html`, [[0, 15000, true], [0, 5000, false]]);
   const recordA = generateRecord(`${domain}/scriptA.js`, 35000, 'Script');
@@ -87,7 +87,10 @@ describe('UnusedJavaScript audit', () => {
       SourceMaps: [],
     };
     const result = await UnusedJavaScript.audit_(artifacts, networkRecords, context);
-    assert.equal(result.items.length, 2);
+    expect(result.items.map(item => item.url)).toEqual([
+      'https://www.google.com/scriptB.js',
+      'https://www.google.com/inline.html',
+    ]);
 
     const scriptBWaste = result.items[0];
     assert.equal(scriptBWaste.totalBytes, 50000);
