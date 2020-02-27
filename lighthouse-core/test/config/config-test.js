@@ -1161,10 +1161,7 @@ describe('Config', () => {
       const extendedConfig = new Config(extended);
 
       assert.equal(config.passes.length, 1, 'did not filter config');
-      // Clone so we do not compare event callbacks binded on gatherers.
-      assert.deepStrictEqual(
-        JSON.parse(JSON.stringify(config)),
-        JSON.parse(JSON.stringify(extendedConfig)), 'had mutations');
+      assert.deepStrictEqual(config, extendedConfig, 'had mutations');
     });
 
     it('should filter out other passes if passed Performance', () => {

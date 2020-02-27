@@ -72,8 +72,6 @@ function copyAssets() {
     'images/**/*',
     'sw.js',
     'manifest.json',
-    'treemap/index.html',
-    'treemap/treemap.js',
   ], distDir, {
     cwd: `${sourceDir}/app/`,
     parents: true,
@@ -97,6 +95,7 @@ async function css() {
 async function html() {
   let htmlSrc = await readFileAsync(`${sourceDir}/app/index.html`, {encoding: 'utf8'});
   htmlSrc = htmlSrc.replace(/%%LIGHTHOUSE_TEMPLATES%%/, htmlReportAssets.REPORT_TEMPLATES);
+
   await safeWriteFileAsync(`${distDir}/index.html`, htmlSrc);
 }
 
@@ -141,7 +140,6 @@ async function compileJs() {
     idbKeyvalJs,
     versionJs,
     ...viewJsFiles,
-    fs.readFileSync(`${__dirname}/../node_modules/webtreemap-cdt/dist/webtreemap.js`, 'utf-8'),
   ];
   const options = {
     output: {preamble: license}, // Insert license at top.
