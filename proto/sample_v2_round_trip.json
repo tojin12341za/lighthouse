@@ -447,7 +447,7 @@
             "id": "cumulative-layout-shift",
             "numericUnit": "unitless",
             "numericValue": 0.42,
-            "score": 0.21,
+            "score": 0.23,
             "scoreDisplayMode": "numeric",
             "title": "Cumulative Layout Shift"
         },
