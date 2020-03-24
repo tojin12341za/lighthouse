@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const {resolveModule} = require('../lighthouse-core/config/config-helpers.js');
 
 /*
  * The relationship between these CLI modules:
@@ -65,8 +66,8 @@ async function begin() {
   /** @type {LH.Config.Json|undefined} */
   let configJson;
   if (cliFlags.configPath) {
-    // Resolve the config file path relative to where cli was called.
-    cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
+    cliFlags.configPath =
+      resolveModule(cliFlags.configPath, `${__dirname}/../lighthouse-core/config`);
     configJson = /** @type {LH.Config.Json} */ (require(cliFlags.configPath));
   } else if (cliFlags.preset) {
     if (cliFlags.preset === 'mixed-content') {

@@ -84,6 +84,14 @@ describe('CLI bin', function() {
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
     });
 
+    it('should load the config from the path, resolved from config folder', async () => {
+      cliFlags = {...cliFlags, configPath: 'lr-desktop-config.js'};
+      const actualConfig = require('../../../lighthouse-core/config/lr-desktop-config.js');
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
+    });
+
     it('should load the config from the preset', async () => {
       cliFlags = {...cliFlags, preset: 'mixed-content'};
       const actualConfig = require('../../../lighthouse-core/config/mixed-content-config.js');
