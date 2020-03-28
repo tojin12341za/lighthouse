@@ -269,7 +269,16 @@ function _preformatValues(icuMessage, messageFormatter, values) {
  */
 
 /** @type {Map<string, IcuMessageInstance[]>} */
-const _icuMessageInstanceMap = new Map();
+let _icuMessageInstanceMap = new Map();
+
+function getIcuMessageInstanceMap() {
+  return _icuMessageInstanceMap;
+}
+
+/** @param {Map<string, IcuMessageInstance[]>} map */
+function setIcuMessageInstanceMap(map) {
+  _icuMessageInstanceMap = map;
+}
 
 const _ICUMsgNotFoundMsg = 'ICU message not found in destination locale';
 /**
@@ -520,4 +529,6 @@ module.exports = {
   isIcuMessage,
   collectAllCustomElementsFromICU,
   registerLocaleData,
+  getIcuMessageInstanceMap,
+  setIcuMessageInstanceMap,
 };

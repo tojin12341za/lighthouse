@@ -16,6 +16,7 @@ const rimraf = require('rimraf');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
 const LHError = require('../lib/lh-error.js');
+const i18n = require('../lib/i18n/i18n.js');
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
@@ -66,6 +67,15 @@ function loadArtifacts(basePath) {
     artifacts.traces[passName] = Array.isArray(trace) ? {traceEvents: trace} : trace;
   });
 
+  // load i18n instances
+  const icuMessageInstanceMap = new Map();
+  const icuMessageInstanceObj = JSON.parse(
+    fs.readFileSync(`${basePath}/i18n-instances.json`, 'utf8'));
+  for (const [key, value] of Object.entries(icuMessageInstanceObj)) {
+    icuMessageInstanceMap.set(key, value);
+  }
+  i18n.setIcuMessageInstanceMap(icuMessageInstanceMap);
+
   if (Array.isArray(artifacts.Timing)) {
     // Any Timing entries in saved artifacts will have a different timeOrigin than the auditing phase
     // The `gather` prop is read later in generate-timing-trace and they're added to a separate track of trace events
@@ -87,6 +97,20 @@ function stringifyReplacer(key, value) {
   }
 
   return value;
+}
+
+/**
+ * @param {Map<*,*>} inputMap
+ */
+function mapToObj(inputMap) {
+  const obj = {};
+
+  inputMap.forEach(function(value, key) {
+    // @ts-ignore
+    obj[key] = value;
+  });
+
+  return obj;
 }
 
 /**
@@ -115,6 +139,12 @@ async function saveArtifacts(artifacts, basePath) {
     const log = JSON.stringify(devtoolsLog);
     fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
   }
+
+  // save i18n instances
+  const icuMessageInstanceMap = i18n.getIcuMessageInstanceMap();
+  const icuMessageInstanceObj = mapToObj(icuMessageInstanceMap);
+  fs.writeFileSync(
+    `${basePath}/i18n-instances.json`, JSON.stringify(icuMessageInstanceObj, null, 2), 'utf8');
 
   // save everything else, using a replacer to serialize LHErrors in the artifacts.
   const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2);
