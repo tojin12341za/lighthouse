@@ -74,7 +74,7 @@ class HTTPS extends Audit {
 
       const items = Array.from(new Set(insecureURLs)).map(url => ({url}));
 
-      let displayValue = '';
+      let displayValue;
       if (items.length > 0) {
         displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
       }

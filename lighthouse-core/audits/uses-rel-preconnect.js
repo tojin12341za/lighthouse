@@ -97,7 +97,7 @@ class UsesRelPreconnectAudit extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
     const settings = context.settings;
     let maxWasted = 0;
-    /** @type {string[]} */
+    /** @type {Array<LH.IcuMessage>} */
     const warnings = [];
 
     const [networkRecords, mainResource, loadSimulator] = await Promise.all([

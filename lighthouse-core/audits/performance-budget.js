@@ -27,7 +27,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {{count: number, size: number}} ResourceEntry */
-/** @typedef {{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number, sizeOverBudget: number | undefined, countOverBudget: string | undefined}} BudgetItem */
+/** @typedef {{resourceType: LH.Budget.ResourceType, label: LH.IcuMessage, requestCount: number, size: number, sizeOverBudget: number | undefined, countOverBudget: LH.IcuMessage | undefined}} BudgetItem */
 
 class ResourceBudget extends Audit {
   /**

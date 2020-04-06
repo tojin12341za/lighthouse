@@ -85,7 +85,7 @@ declare global {
       type ItemValueType = 'bytes' | 'code' | 'link' | 'ms' | 'multi' | 'node' | 'source-location' | 'numeric' | 'text' | 'thumbnail' | 'timespanMs' | 'url';
 
       /** Possible types of values found within table items. */
-      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue;
+      type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | IcuMessage;
 
       // TODO: drop TableColumnHeading, rename OpportunityColumnHeading to TableColumnHeading and
       // use that for all table-like audit details.
@@ -97,7 +97,7 @@ declare global {
          */
         key: string|null;
         /** Readable text label of the field. */
-        text: string;
+        text: string | IcuMessage;
         /**
          * The data format of the column of values being described. Usually
          * those values will be primitives rendered as this type, but the values
@@ -126,7 +126,7 @@ declare global {
          */
         key: string|null;
         /** Readable text label of the field. */
-        label: string;
+        label: string | IcuMessage;
         /**
          * The data format of the column of values being described. Usually
          * those values will be primitives rendered as this type, but the values

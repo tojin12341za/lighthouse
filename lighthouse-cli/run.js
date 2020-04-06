@@ -20,7 +20,7 @@ const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 
 const open = require('open');
 
-/** @typedef {import('../lighthouse-core/lib/lh-error.js')} LighthouseError */
+/** @typedef {Error & {code: string, friendlyMessage?: string}} ExitError */
 
 const _RUNTIME_ERROR_CODE = 1;
 const _PROTOCOL_TIMEOUT_EXIT_CODE = 67;
@@ -76,7 +76,7 @@ function printProtocolTimeoutErrorAndExit() {
 }
 
 /**
- * @param {LighthouseError} err
+ * @param {ExitError} err
  * @return {never}
  */
 function printRuntimeErrorAndExit(err) {
@@ -88,7 +88,7 @@ function printRuntimeErrorAndExit(err) {
 }
 
 /**
- * @param {LighthouseError} err
+ * @param {ExitError} err
  * @return {never}
  */
 function printErrorAndExit(err) {
@@ -209,7 +209,6 @@ async function runLighthouse(url, flags, config) {
       return printErrorAndExit({
         name: 'LHError',
         friendlyMessage: runtimeError.message,
-        lhrRuntimeError: true,
         code: runtimeError.code,
         message: runtimeError.message,
       });

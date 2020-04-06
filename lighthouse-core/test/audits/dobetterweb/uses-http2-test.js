@@ -60,7 +60,7 @@ describe('Resources are fetched over http/2', () => {
     return UsesHTTP2Audit.audit(getArtifacts(h2Records, URL), {computedCache: new Map()}).then(
       auditResult => {
         assert.equal(auditResult.score, 1);
-        assert.ok(auditResult.displayValue === '');
+        assert.ok(auditResult.displayValue === undefined);
       }
     );
   });

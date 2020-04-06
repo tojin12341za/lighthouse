@@ -8,7 +8,7 @@ interface Pack {
   id: string;
   iconDataURL: string;
   title: string;
-  descriptions: Record<string, string>;
+  descriptions: Record<string, string | LH.IcuMessage>;
 }
 
 declare const stackPacks: Pack[];

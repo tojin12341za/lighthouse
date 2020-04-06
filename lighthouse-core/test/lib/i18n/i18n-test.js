@@ -32,17 +32,20 @@ describe('i18n', () => {
   });
 
   describe('#createMessageInstanceIdFn', () => {
-    it('returns a string reference', () => {
+    it('returns a IcuMessage reference', () => {
       const fakeFile = path.join(__dirname, 'fake-file.js');
-      const templates = {daString: 'use me!'};
+      const templates = {daString: 'use {x} me!'};
       const formatter = i18n.createMessageInstanceIdFn(fakeFile, templates);
 
-      const expected = 'lighthouse-core/test/lib/i18n/fake-file.js | daString # 0';
-      expect(formatter(templates.daString, {x: 1})).toBe(expected);
+      expect(formatter(templates.daString, {x: 1})).toStrictEqual({
+        i18nId: 'lighthouse-core/test/lib/i18n/fake-file.js | daString',
+        values: {x: 1},
+        formattedDefault: 'use 1 me!',
+      });
     });
   });
 
-  describe('#replaceIcuMessageInstanceIds', () => {
+  describe('#replaceIcuMessages', () => {
     it('replaces the references in the LHR', () => {
       const fakeFile = path.join(__dirname, 'fake-file-number-2.js');
       const UIStrings = {aString: 'different {x}!'};
@@ -51,7 +54,7 @@ describe('i18n', () => {
       const title = formatter(UIStrings.aString, {x: 1});
       const lhr = {audits: {'fake-audit': {title}}};
 
-      const icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, 'en-US');
+      const icuMessagePaths = i18n.replaceIcuMessages(lhr, 'en-US');
       expect(lhr.audits['fake-audit'].title).toBe('different 1!');
 
       const expectedPathId = 'lighthouse-core/test/lib/i18n/fake-file-number-2.js | aString';
@@ -275,20 +278,18 @@ describe('i18n', () => {
     });
 
     it('throws an error if a string value is used for a numeric placeholder', () => {
-      const helloStr = str_(UIStrings.helloTimeInMsWorld, {
+      expect(_ => str_(UIStrings.helloTimeInMsWorld, {
         timeInMs: 'string not a number',
-      });
-      expect(_ => i18n.getFormatted(helloStr, 'en-US'))
+      }))
         // eslint-disable-next-line max-len
         .toThrow(`ICU Message "Hello {timeInMs, number, seconds} World" contains a numeric reference ("timeInMs") but provided value was not a number`);
     });
 
     it('throws an error if a value is provided that has no placeholder in the message', () => {
-      const helloStr = str_(UIStrings.helloTimeInMsWorld, {
+      expect(_ => str_(UIStrings.helloTimeInMsWorld, {
         timeInMs: 55,
         sirNotAppearingInThisString: 66,
-      });
-      expect(_ => i18n.getFormatted(helloStr, 'en-US'))
+      }))
         // eslint-disable-next-line max-len
         .toThrow(`Provided value "sirNotAppearingInThisString" does not match any placeholder in ICU message "Hello {timeInMs, number, seconds} World"`);
     });

@@ -52,6 +52,7 @@ describe('swap-locale', () => {
         redirects: {
           id: 'redirects',
           title: 'Avoid multiple page redirects',
+          doesntExist: 'A string that does not have localized versions',
         },
         fakeaudit: {
           id: 'fakeaudit',

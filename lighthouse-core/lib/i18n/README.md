@@ -219,7 +219,7 @@ CTC is a name that is distinct and identifies this as the Chrome translation for
 
 2.  i18n id in lookup table along with backup message.
 
-3.  Message is looked up via `replaceIcuMessageInstanceIds` &
+3.  Message is looked up via `replaceIcuMessages` &
     `getFormatted`.
 
 ##### Example:
@@ -255,15 +255,15 @@ CTC is a name that is distinct and identifies this as the Chrome translation for
     }
     ```
 
-3.  Lookup in `i18n.js`. `replaceIcuMessageInstanceIds` and `getFormatted` will attempt to lookup in this order:
+3.  Lookup in `i18n.js`. `replaceIcuMessages` and `getFormatted` will attempt to lookup in this order:
 
     1.  `locales/{locale}.json` The best result, the string is found in the target locale, and should appear correct.
 
     2.  `locales/en.json` _Okay_ result. The string was not found in the target locale, but was in `en`, so show the English string.
 
-    3.  The fallback message passed to `_formatIcuMessage`. This lookup is subtley different than the en lookup. A string that is provided in the UIStrings, but not en may be part of a swap-locale that is using an old deprecated string, so would need to be populated by UIString replacement here instead.
+    3.  The fallback message passed to `_formatIcuMessage`. This lookup is subtley different than the en lookup. A string that is provided in the UIStrings, but not en may be part of a swap-locale that is using an old deprecated string, so would need to be populated by UIString replacement here instead. TODO(bckenny): this isn't actually done anymore?
 
-    4.  Throw `_ICUMsgNotFoundMsg` Error. This is preferrable to showing the user some id control lookup like "lighthouse-core/audits/byte-efficiency/unminified-css.js | description"
+    4.  Throw `_ICUMsgNotFoundMsg` Error. This is preferrable to showing the user some id control lookup like "lighthouse-core/audits/byte-efficiency/unminified-css.js | description" TODO(bckenny): getting rid of
 
     This is also the point at which ICU is replaced by values. So this...
 

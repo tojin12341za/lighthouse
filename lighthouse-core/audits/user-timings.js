@@ -103,7 +103,6 @@ class UserTimings extends Audit {
 
       const details = Audit.makeTableDetails(headings, tableRows);
 
-      /** @type {string|undefined} */
       let displayValue;
       if (userTimings.length) {
         displayValue = str_(UIStrings.displayValue, {itemCount: userTimings.length});
