@@ -8,11 +8,20 @@
 /* eslint-disable no-console */
 
 const fs = require('fs');
+const path = require('path');
 const glob = require('glob');
 const {execFileSync} = require('child_process');
 const LegacyJavascript = require('../../audits/legacy-javascript.js');
 const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devtools-log.js');
-const VARIANT_DIR = `${__dirname}/variants`;
+
+// Create variants in a directory named-cached by contents of this script and the lockfile.
+// This folder is in the CI cache, so that the time consuming part of this test only runs if
+// the output would change.
+const hash = runCommand('bash', [
+  '-c',
+  'md5 -q yarn.lock run.js main.js | md5',
+]).toString().trim();
+const VARIANT_DIR = `${__dirname}/variants/${hash}`;
 
 // build, audit, all.
 const STAGE = process.env.STAGE || 'all';
@@ -142,7 +151,7 @@ const polyfills = [
  * @param {string[]} args
  */
 function runCommand(command, args) {
-  execFileSync(command, args, {cwd: __dirname});
+  return execFileSync(command, args, {cwd: __dirname});
 }
 
 /**
@@ -258,6 +267,32 @@ function makeSummary() {
   };
 }
 
+function createSummarySizes() {
+  const lines = [];
+
+  for (const variantGroupFolder of glob.sync(`${VARIANT_DIR}/*`)) {
+    lines.push(path.relative(VARIANT_DIR, variantGroupFolder));
+
+    const variants = [];
+    for (const variantFolder of glob.sync(`${variantGroupFolder}/**/main.bundle.min.js `)) {
+      const size = fs.readFileSync(variantFolder).length;
+      variants.push({name: path.relative(variantGroupFolder, variantFolder), size});
+    }
+
+    const maxNumberChars = Math.ceil(Math.max(...variants.map(v => Math.log10(v.size))));
+    variants.sort((a, b) => b.size - a.size);
+    for (const variant of variants) {
+      // Line up the digits.
+      const sizeField = `${variant.size}`.padStart(maxNumberChars);
+      // Buffer of 12 characters so a new entry with more digits doesn't change every line.
+      lines.push(`  ${sizeField.padEnd(12)} ${variant.name}`);
+    }
+    lines.push('');
+  }
+
+  fs.writeFileSync(`${__dirname}/summary-sizes.txt`, lines.join('\n'));
+}
+
 async function main() {
   for (const plugin of plugins) {
     await createVariant({
@@ -313,9 +348,7 @@ async function main() {
   });
   console.table(summary.variants);
 
-  runCommand('sh', [
-    'update-sizes.sh',
-  ]);
+  createSummarySizes();
 }
 
 main();
