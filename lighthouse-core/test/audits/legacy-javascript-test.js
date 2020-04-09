@@ -28,6 +28,7 @@ const createArtifacts = (scripts) => {
       };
       return acc;
     }, {}),
+    SourceMaps: [],
   };
 };
 

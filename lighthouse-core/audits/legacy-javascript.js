@@ -18,6 +18,7 @@
 const Audit = require('./audit.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainResource = require('../computed/main-resource.js');
+const JSBundles = require('../computed/js-bundles.js');
 const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -107,7 +108,7 @@ class LegacyJavascript extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['devtoolsLogs', 'ScriptElements', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'ScriptElements', 'SourceMaps', 'URL'],
     };
   }
 
@@ -281,23 +282,46 @@ class LegacyJavascript extends Audit {
   }
 
   /**
-   * Returns a collection of match results grouped by script url and with a mapping
-   * to determine the order in which the matches were discovered.
+   * Returns a collection of match results grouped by script url.
    *
    * @param {CodePatternMatcher} matcher
    * @param {LH.GathererArtifacts['ScriptElements']} scripts
    * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @param {LH.Artifacts.Bundle[]} bundles
    * @return {Map<string, PatternMatchResult[]>}
    */
-  static detectCodePatternsAcrossScripts(matcher, scripts, networkRecords) {
+  static detectAcrossScripts(matcher, scripts, networkRecords, bundles) {
     /** @type {Map<string, PatternMatchResult[]>} */
     const urlToMatchResults = new Map();
+    const polyfillData = this.getPolyfillData();
 
     for (const {requestId, content} of Object.values(scripts)) {
       if (!content) continue;
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
+
+      // Start with pattern matching.
       const matches = matcher.match(content);
+
+      // Look for relevant modules.
+      const bundle = bundles.find(b => b.script.src === networkRecord.url);
+      if (bundle) {
+        for (const {module, name} of polyfillData) {
+          // Skip if the pattern matching found a match for this polyfill.
+          if (matches.some(m => m.name === name)) continue;
+
+          const source = bundle.rawMap.sources.find(source => source.includes(module));
+          if (!source) continue;
+
+          const mapping = bundle.map.mappings().find(m => m.sourceURL === source);
+          if (mapping) {
+            matches.push({name, line: mapping.lineNumber, column: mapping.columnNumber});
+          } else {
+            matches.push({name, line: 0, column: 0});
+          }
+        }
+      }
+
       if (!matches.length) continue;
       urlToMatchResults.set(networkRecord.url, matches);
     }
@@ -317,6 +341,7 @@ class LegacyJavascript extends Audit {
       URL: artifacts.URL,
       devtoolsLog,
     }, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Array<{url: string, signals: string[], locations: LH.Audit.Details.SourceLocationValue[]}>} */
     const tableRows = [];
@@ -329,7 +354,7 @@ class LegacyJavascript extends Audit {
     ]);
 
     const urlToMatchResults =
-      this.detectCodePatternsAcrossScripts(matcher, artifacts.ScriptElements, networkRecords);
+      this.detectAcrossScripts(matcher, artifacts.ScriptElements, networkRecords, bundles);
     urlToMatchResults.forEach((matches, url) => {
       /** @type {typeof tableRows[number]} */
       const row = {url, signals: [], locations: []};
