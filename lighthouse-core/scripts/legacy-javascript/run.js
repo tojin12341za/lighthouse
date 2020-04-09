@@ -17,6 +17,7 @@ const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devto
 // Create variants in a directory named-cached by contents of this script and the lockfile.
 // This folder is in the CI cache, so that the time consuming part of this test only runs if
 // the output would change.
+removeCoreJs(); // (in case the script was canceled halfway - there shouldn't be a core-js dep checked in.)
 const hash = runCommand('bash', [
   '-c',
   'md5 -q yarn.lock run.js main.js | md5',
