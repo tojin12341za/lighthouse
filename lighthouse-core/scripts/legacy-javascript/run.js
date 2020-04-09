@@ -113,7 +113,7 @@ async function createVariant(options) {
 /**
  * @param {string} code
  * @param {LH.Artifacts.RawSourceMap} map
- * @param {{sourceMaps: boolean}}
+ * @param {{sourceMaps: boolean}} _
  * @return {Promise<LH.Audit.Product>}
  */
 function getLegacyJavascriptResults(code, map, {sourceMaps}) {
