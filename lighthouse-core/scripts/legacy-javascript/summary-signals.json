@@ -1,10 +1,14 @@
 {
-  "totalSignals": 251,
+  "totalSignals": 253,
   "variantsMissingSignals": [
     "core-js-2-preset-env-esmodules/true",
     "core-js-3-preset-env-esmodules/true"
   ],
   "variants": [
+    {
+      "name": "core-js-2-only-polyfill/es6-array-fill",
+      "signals": "Array.prototype.fill"
+    },
     {
       "name": "core-js-2-only-polyfill/es6-array-filter",
       "signals": "Array.prototype.filter"
@@ -328,6 +332,10 @@
     {
       "name": "core-js-2-preset-env-esmodules/true",
       "signals": ""
+    },
+    {
+      "name": "core-js-3-only-polyfill/es6-array-fill",
+      "signals": "Array.prototype.fill"
     },
     {
       "name": "core-js-3-only-polyfill/es6-array-filter",

@@ -163,6 +163,7 @@ class LegacyJavascript extends Audit {
   static getPolyfillData() {
     return [
       /* eslint-disable max-len */
+      {module: 'es6.array.fill', name: 'Array.prototype.fill'},
       {module: 'es6.array.filter', name: 'Array.prototype.filter'},
       {module: 'es6.array.find', name: 'Array.prototype.find'},
       {module: 'es6.array.find-index', name: 'Array.prototype.findIndex'},

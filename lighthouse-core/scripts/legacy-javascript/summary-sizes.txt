@@ -1,5 +1,5 @@
 variants/core-js-2-only-polyfill
- 1207365 total
+ 1217135 total
    47782 variants/core-js-2-only-polyfill/es6-typed-uint8-clamped-array/main.bundle.min.js
    47762 variants/core-js-2-only-polyfill/es6-typed-float64-array/main.bundle.min.js
    47762 variants/core-js-2-only-polyfill/es6-typed-float32-array/main.bundle.min.js
@@ -39,6 +39,7 @@ variants/core-js-2-only-polyfill
    10018 variants/core-js-2-only-polyfill/es6-string-ends-with/main.bundle.min.js
     9972 variants/core-js-2-only-polyfill/es6-string-starts-with/main.bundle.min.js
     9884 variants/core-js-2-only-polyfill/es6-reflect-set-prototype-of/main.bundle.min.js
+    9770 variants/core-js-2-only-polyfill/es6-array-fill/main.bundle.min.js
     9750 variants/core-js-2-only-polyfill/es6-array-reduce-right/main.bundle.min.js
     9726 variants/core-js-2-only-polyfill/es6-object-set-prototype-of/main.bundle.min.js
     9724 variants/core-js-2-only-polyfill/es6-array-reduce/main.bundle.min.js
@@ -86,7 +87,7 @@ variants/core-js-2-preset-env-esmodules
     1352 variants/core-js-2-preset-env-esmodules/true/main.bundle.min.js
 
 variants/core-js-3-only-polyfill
- 1207331 total
+ 1217100 total
    47781 variants/core-js-3-only-polyfill/es6-typed-uint8-clamped-array/main.bundle.min.js
    47761 variants/core-js-3-only-polyfill/es6-typed-float64-array/main.bundle.min.js
    47761 variants/core-js-3-only-polyfill/es6-typed-float32-array/main.bundle.min.js
@@ -126,6 +127,7 @@ variants/core-js-3-only-polyfill
    10017 variants/core-js-3-only-polyfill/es6-string-ends-with/main.bundle.min.js
     9971 variants/core-js-3-only-polyfill/es6-string-starts-with/main.bundle.min.js
     9883 variants/core-js-3-only-polyfill/es6-reflect-set-prototype-of/main.bundle.min.js
+    9769 variants/core-js-3-only-polyfill/es6-array-fill/main.bundle.min.js
     9749 variants/core-js-3-only-polyfill/es6-array-reduce-right/main.bundle.min.js
     9725 variants/core-js-3-only-polyfill/es6-object-set-prototype-of/main.bundle.min.js
     9723 variants/core-js-3-only-polyfill/es6-array-reduce/main.bundle.min.js
