@@ -12,6 +12,19 @@ node run.js
 
 `summary-sizes.json` - lists the size of each minified variant. Useful for understanding how many bytes each polyfill / transform adds.
 
+## Interpreting Results
+
+There are two outputs to this test:
+
+* summary-sizes.txt
+* summary-signals.json
+
+`summary-sizes.txt` lists each of the variants (grouped by type) and sorted by their byte size. This is mostly a diagnostic tool and changes in this can be ignored. This is checked in because whenever the lockfile is updated, `summary-sizes.txt` tells us things like if transforms are getting worse. And it is a quick reference for the relative weight of each of these transform/polyfills.
+
+`summary-signals.json` is for preventing regressions in the audit. `.variantsMissingSignals` should at least have the babel-preset-env=true variant (since this whole test is about finding signals when babel-preset-env is NOT used). There may be more missing variants since it's just a heuristic. The number of these should only go down as the pattern matching improves.
+
+For the signals of each variant, the expectation is that the number of them only goes up.
+
 ## Future Work
 
 * Use real apps to see how over-transpiling affects real code. Necessary for making an opprotunity.
