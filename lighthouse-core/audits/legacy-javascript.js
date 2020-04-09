@@ -300,10 +300,10 @@ class LegacyJavascript extends Audit {
       const networkRecord = networkRecords.find(record => record.requestId === requestId);
       if (!networkRecord) continue;
 
-      // Start with pattern matching.
+      // Start with pattern matching against the downloaded script.
       const matches = matcher.match(content);
 
-      // Look for relevant modules.
+      // If it's a bundle with source maps, add in the polyfill modules by name too.
       const bundle = bundles.find(b => b.script.src === networkRecord.url);
       if (bundle) {
         for (const {module, name} of polyfillData) {
