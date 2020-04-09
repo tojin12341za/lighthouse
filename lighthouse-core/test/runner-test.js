@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -366,7 +366,7 @@ describe('Runner', () => {
       rimraf.sync(resolvedPath);
     });
 
-    it('only passes the required artifacts to the audit', async () => {
+    it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
       class SimpleAudit extends Audit {
         static get meta() {
           return {
@@ -395,6 +395,40 @@ describe('Runner', () => {
       expect(auditMockFn.mock.calls[0][0]).toEqual({
         ArtifactA: 'apple',
         ArtifactC: 'cherry',
+      });
+    });
+
+    it('only passes the requested artifacts to the audit (w/ optional artifacts)', async () => {
+      class SimpleAudit extends Audit {
+        static get meta() {
+          return {
+            id: 'simple',
+            title: 'Requires some artifacts',
+            failureTitle: 'Artifacts',
+            description: 'Test for always throwing',
+            requiredArtifacts: ['ArtifactA', 'ArtifactC'],
+            __internalOptionalArtifacts: ['ArtifactD'],
+          };
+        }
+      }
+
+      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const config = new Config({
+        settings: {
+          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+        },
+        audits: [
+          SimpleAudit,
+        ],
+      });
+
+      const results = await Runner.run({}, {config});
+      expect(results.lhr).toMatchObject({audits: {simple: {score: 1}}});
+      expect(auditMockFn).toHaveBeenCalled();
+      expect(auditMockFn.mock.calls[0][0]).toEqual({
+        ArtifactA: 'apple',
+        ArtifactC: 'cherry',
+        ArtifactD: 'date',
       });
     });
   });
@@ -715,10 +749,10 @@ describe('Runner', () => {
         online: true,
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
         async gotoURL(url) {
-          if (url.includes('blank')) return null;
+          if (url.includes('blank')) return {finalUrl: '', timedOut: false};
           if (firstLoad) {
             firstLoad = false;
-            return url;
+            return {finalUrl: url, timedOut: false};
           } else {
             throw new LHError(LHError.errors.PAGE_HUNG);
           }

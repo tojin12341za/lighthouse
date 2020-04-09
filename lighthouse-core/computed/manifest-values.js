@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -15,7 +15,7 @@ const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
 const SUGGESTED_SHORTNAME_LENGTH = 12;
 
 class ManifestValues {
-  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>, errors: string[]) => boolean} Validator */
+  /** @typedef {(val: NonNullable<LH.Artifacts.Manifest['value']>, errors: LH.Artifacts.InstallabilityErrors['errors']) => boolean} Validator */
 
   /**
    * @return {Array<{id: LH.Artifacts.ManifestValueCheckID, failureText: string, validate: Validator}>}
@@ -43,14 +43,12 @@ class ManifestValues {
         id: 'fetchesIcon',
         failureText: 'Manifest icon failed to be fetched',
         validate: (manifestValue, errors) => {
-          const failedToFetchIconErrors = [
-            // kCannotDownloadIconMessage
-            'Could not download a required icon from the manifest',
-            // kNoIconAvailableMessage
-            'Downloaded icon was empty or corrupted',
+          const failedToFetchIconErrorIds = [
+            'cannot-download-icon',
+            'no-icon-available',
           ];
           return icons.doExist(manifestValue) &&
-            !failedToFetchIconErrors.some(error => errors.includes(error));
+            !errors.some(error => failedToFetchIconErrorIds.includes(error.errorId));
         },
       },
       {
@@ -85,6 +83,12 @@ class ManifestValues {
         id: 'hasName',
         failureText: 'Manifest does not have `name`',
         validate: manifestValue => !!manifestValue.name.value,
+      },
+      {
+        id: 'hasMaskableIcon',
+        failureText: 'Manifest does not have at least one icon that is maskable',
+        validate: ManifestValue => icons.doExist(ManifestValue) &&
+            icons.containsMaskableIcon(ManifestValue),
       },
     ];
   }
