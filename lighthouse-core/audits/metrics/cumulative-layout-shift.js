@@ -14,9 +14,9 @@ const UIStrings = {
   title: 'Cumulative Layout Shift',
   /** Description of the Cumulative Layout Shift metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Cumulative Layout Shift is the sum of all layout shifts that occurred during a ' +
-      'page\'s load. A layout shift is any movement an element makes once it is visible to the ' +
-      'user. All layout shift is recorded, scored, and then aggregated into a cumulative score ' +
-      'between 0 and 1; 0 being a perfectly stable page, and >=0.5 being a highly shifting page. ' +
+      'page load. A layout shift is any movement an element makes once it is visible.' +
+      'Layout shifts are recorded, scored, and then aggregated into a cumulative score ' +
+      'between 0 and 1; 0 is a perfectly stable page, and >=0.5 is a highly shifting page. ' +
       '[Learn more](https://web.dev/cls).',
 };
 
