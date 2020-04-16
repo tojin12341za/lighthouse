@@ -11,6 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const {execFileSync} = require('child_process');
+const crypto = require('crypto');
 const LegacyJavascript = require('../../audits/legacy-javascript.js');
 const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devtools-log.js');
 
@@ -18,10 +19,13 @@ const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devto
 // This folder is in the CI cache, so that the time consuming part of this test only runs if
 // the output would change.
 removeCoreJs(); // (in case the script was canceled halfway - there shouldn't be a core-js dep checked in.)
-const hash = runCommand('bash', [
-  '-c',
-  'md5 -q yarn.lock run.js main.js | md5',
-]).toString().trim();
+
+const hash = crypto
+  .createHash('sha256')
+  .update(fs.readFileSync(`${__dirname}/yarn.lock`, 'utf8'))
+  .update(fs.readFileSync(`${__dirname}/run.js`, 'utf8'))
+  .update(fs.readFileSync(`${__dirname}/main.js`, 'utf8'))
+  .digest('hex');
 const VARIANT_DIR = `${__dirname}/variants/${hash}`;
 
 // build, audit, all.
@@ -152,7 +156,7 @@ const polyfills = [
  * @param {string[]} args
  */
 function runCommand(command, args) {
-  return execFileSync(command, args, {cwd: __dirname});
+  execFileSync(command, args, {cwd: __dirname});
 }
 
 /**
