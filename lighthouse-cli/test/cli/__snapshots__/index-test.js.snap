@@ -25,10 +25,10 @@ Object {
       "path": "metrics/first-contentful-paint",
     },
     Object {
-      "path": "metrics/first-meaningful-paint",
+      "path": "metrics/largest-contentful-paint",
     },
     Object {
-      "path": "metrics/largest-contentful-paint",
+      "path": "metrics/first-meaningful-paint",
     },
     Object {
       "path": "load-fast-enough-for-pwa",
@@ -50,6 +50,9 @@ Object {
     },
     Object {
       "path": "metrics/max-potential-fid",
+    },
+    Object {
+      "path": "metrics/cumulative-layout-shift",
     },
     Object {
       "path": "errors-in-console",
@@ -92,6 +95,9 @@ Object {
     },
     Object {
       "path": "image-aspect-ratio",
+    },
+    Object {
+      "path": "image-size-responsive",
     },
     Object {
       "path": "deprecations",
@@ -188,9 +194,6 @@ Object {
     },
     Object {
       "path": "accessibility/aria-valid-attr",
-    },
-    Object {
-      "path": "accessibility/audio-caption",
     },
     Object {
       "path": "accessibility/button-name",
@@ -485,11 +488,6 @@ Object {
           "weight": 10,
         },
         Object {
-          "group": "a11y-audio-video",
-          "id": "audio-caption",
-          "weight": 10,
-        },
-        Object {
           "group": "a11y-names-labels",
           "id": "button-name",
           "weight": 10,
@@ -745,6 +743,10 @@ Object {
           "id": "image-aspect-ratio",
           "weight": 1,
         },
+        Object {
+          "id": "image-size-responsive",
+          "weight": 1,
+        },
       ],
       "title": "Best Practices",
     },
@@ -753,44 +755,47 @@ Object {
         Object {
           "group": "metrics",
           "id": "first-contentful-paint",
-          "weight": 3,
-        },
-        Object {
-          "group": "metrics",
-          "id": "first-meaningful-paint",
-          "weight": 1,
-        },
-        Object {
-          "group": "metrics",
-          "id": "largest-contentful-paint",
-          "weight": 0,
+          "weight": 15,
         },
         Object {
           "group": "metrics",
           "id": "speed-index",
-          "weight": 4,
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "weight": 25,
         },
         Object {
           "group": "metrics",
           "id": "interactive",
+          "weight": 15,
+        },
+        Object {
+          "group": "metrics",
+          "id": "total-blocking-time",
+          "weight": 25,
+        },
+        Object {
+          "group": "metrics",
+          "id": "cumulative-layout-shift",
           "weight": 5,
         },
         Object {
-          "group": "metrics",
           "id": "first-cpu-idle",
-          "weight": 2,
+          "weight": 0,
         },
         Object {
-          "group": "metrics",
           "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
-          "id": "estimated-input-latency",
+          "id": "first-meaningful-paint",
           "weight": 0,
         },
         Object {
-          "id": "total-blocking-time",
+          "id": "estimated-input-latency",
           "weight": 0,
         },
         Object {
@@ -1281,6 +1286,7 @@ Object {
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
@@ -1303,6 +1309,7 @@ Object {
       "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1332,6 +1339,7 @@ Object {
       "loadFailureMode": "warn",
       "networkQuietThresholdMs": 0,
       "passName": "redirectPass",
+      "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
       "useThrottling": false,
@@ -1468,6 +1476,7 @@ Object {
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
