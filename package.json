@@ -139,8 +139,7 @@
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^1.19.0",
     "terser": "^4.2.0",
-    "typescript": "3.8.3",
-    "webtreemap-cdt": "^3.0.0"
+    "typescript": "3.8.3"
   },
   "dependencies": {
     "axe-core": "3.5.1",
