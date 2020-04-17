@@ -73,28 +73,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {WasteData[]} wasteData
-   * @param {LH.Artifacts.NetworkRequest} networkRecord
-   */
-  static determineLengths(wasteData, networkRecord) {
-    let unused = 0;
-    let content = 0;
-    // TODO: this is right for multiple script tags in an HTML document,
-    // but may be wrong for multiple frames using the same script resource.
-    for (const usage of wasteData) {
-      unused += usage.unusedLength;
-      content += usage.contentLength;
-    }
-    const transfer = ByteEfficiencyAudit.estimateTransferSize(networkRecord, content, 'Script');
-
-    return {
-      content,
-      unused,
-      transfer,
-    };
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
