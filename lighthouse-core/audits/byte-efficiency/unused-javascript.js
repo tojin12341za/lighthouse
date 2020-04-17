@@ -109,7 +109,11 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
           .map(([source, unused]) => {
             const total =
               source === '(unmapped)' ? bundle.sizes.unmappedBytes : bundle.sizes.files[source];
-            return {source, unused, total};
+            return {
+              source,
+              unused: Math.round(unused * transferRatio),
+              total: Math.round(total * transferRatio),
+            };
           })
           .filter(d => d.unused >= bundleSourceUnusedThreshold);
 
