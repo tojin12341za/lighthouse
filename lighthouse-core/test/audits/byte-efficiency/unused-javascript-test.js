@@ -131,7 +131,7 @@ describe('UnusedJavaScript audit', () => {
       Array [
         Object {
           "sourceBytes": Array [
-            10061,
+            10062,
             660,
             4043,
             2138,
