@@ -460,75 +460,44 @@ describe('.gotoURL', () => {
       .mockResponse('Emulation.setScriptExecutionDisabled')
       .mockResponse('Page.navigate')
       .mockResponse('Target.setAutoAttach')
-      .mockResponse('Runtime.evaluate');
+      .mockResponse('Runtime.evaluate')
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 'ABC'}}});
   });
 
-  for (const finalUrlSource of ['network', 'window.location']) {
-    it(`will track redirects through gotoURL via ${finalUrlSource}`, async () => {
-      const delay = () => new Promise(resolve => setTimeout(resolve));
+  it('will track redirects through gotoURL load', async () => {
+    driver.on = driver.once = createMockOnceFn();
 
-      class ReplayConnection extends Connection {
-        connect() {
-          return Promise.resolve();
-        }
-        disconnect() {
-          return Promise.resolve();
-        }
-        replayLog() {
-          redirectDevtoolsLog.forEach(msg => this.emitProtocolEvent(msg));
-        }
-        /**
-         * @param {string} method
-         * @param {any} _
-         */
-        sendCommand(method, _) {
-          const resolve = Promise.resolve();
+    const url = 'https://www.example.com';
+    const loadOptions = {
+      waitForNavigated: true,
+    };
 
-          // If navigating, wait, then replay devtools log in parallel to resolve.
-          if (method === 'Page.navigate') {
-            resolve.then(delay).then(_ => this.replayLog());
-          }
+    const loadPromise = makePromiseInspectable(driver.gotoURL(url, loadOptions));
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
 
-          return resolve;
-        }
-      }
+    // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
+    const loadListener = driver.on.findListener('Page.frameNavigated');
 
-      const replayConnection = new ReplayConnection();
-      const driver = new Driver(replayConnection);
+    /** @param {LH.Crdp.Page.Frame} frame */
+    const navigate = frame => driver._eventEmitter.emit('Page.frameNavigated', {frame});
+    const baseFrame = {id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html'};
+    navigate({...baseFrame, url: 'http://example.com'});
+    navigate({...baseFrame, url: 'https://example.com'});
+    navigate({...baseFrame, url: 'https://www.example.com'});
+    navigate({...baseFrame, url: 'https://m.example.com'});
+    navigate({...baseFrame, id: 'ad1', url: 'https://frame-a.example.com'});
+    navigate({...baseFrame, url: 'https://m.example.com/client'});
+    navigate({...baseFrame, id: 'ad2', url: 'https://frame-b.example.com'});
+    navigate({...baseFrame, id: 'ad3', url: 'https://frame-c.example.com'});
 
-      const evalauteAsync = driver.evaluateAsync.bind(driver);
-      driver.evaluateAsync = (expression, options) => {
-        if (!expression.includes('window.location')) return evalauteAsync(expression, options);
-        if (finalUrlSource === 'network') return Promise.reject(new Error('Oops'));
-        return Promise.resolve('https://js-redirected-url.com/');
-      };
+    loadListener();
+    await flushAllTimersAndMicrotasks();
+    expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 
-      // Redirect in log will go through
-      const startUrl = 'http://en.wikipedia.org/';
-      // then https://en.wikipedia.org/
-      // then https://en.wikipedia.org/wiki/Main_Page
-      const finalUrl = finalUrlSource === 'network' ?
-        'https://en.m.wikipedia.org/wiki/Main_Page' :
-        'https://js-redirected-url.com/';
-
-      const loadOptions = {
-        waitForLoad: true,
-        /** @type {LH.Gatherer.PassContext} */
-        // @ts-ignore - we don't need the entire context for the test.
-        passContext: {
-          passConfig: {
-            pauseAfterLoadMs: 0,
-            networkQuietThresholdMs: 0,
-            cpuQuietThresholdMs: 0,
-          },
-        },
-      };
-
-      const loadPromise = driver.gotoURL(startUrl, loadOptions);
-      await flushAllTimersAndMicrotasks();
-      expect(await loadPromise).toEqual({finalUrl, timedOut: false});
-    });
-  }
+    const results = await loadPromise;
+    expect(results.finalUrl).toEqual('https://m.example.com/client');
+  });
 
   describe('when waitForNavigated', () => {
     it('waits for Page.frameNavigated', async () => {
