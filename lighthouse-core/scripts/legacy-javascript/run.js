@@ -275,7 +275,7 @@ function makeSummary() {
 function createSummarySizes() {
   const lines = [];
 
-  for (const variantGroupFolder of glob.sync(`${VARIANT_DIR}/*`)) {
+  for (const variantGroupFolder of glob.sync(`${VARIANT_DIR}/*`).sort()) {
     lines.push(path.relative(VARIANT_DIR, variantGroupFolder));
 
     const variants = [];
