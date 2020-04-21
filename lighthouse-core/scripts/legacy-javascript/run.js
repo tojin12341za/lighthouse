@@ -275,17 +275,21 @@ function makeSummary() {
 function createSummarySizes() {
   const lines = [];
 
-  for (const variantGroupFolder of glob.sync(`${VARIANT_DIR}/*`).sort()) {
+  for (const variantGroupFolder of glob.sync(`${VARIANT_DIR}/*`)) {
     lines.push(path.relative(VARIANT_DIR, variantGroupFolder));
 
     const variants = [];
-    for (const variantFolder of glob.sync(`${variantGroupFolder}/**/main.bundle.min.js `).sort()) {
+    for (const variantFolder of glob.sync(`${variantGroupFolder}/**/main.bundle.min.js `)) {
       const size = fs.readFileSync(variantFolder).length;
       variants.push({name: path.relative(variantGroupFolder, variantFolder), size});
     }
 
     const maxNumberChars = Math.ceil(Math.max(...variants.map(v => Math.log10(v.size))));
-    variants.sort((a, b) => b.size - a.size);
+    variants.sort((a, b) => {
+      const sizeDiff = b.size - a.size;
+      if (sizeDiff !== 0) return sizeDiff;
+      return b.name.localeCompare(a.name);
+    });
     for (const variant of variants) {
       // Line up the digits.
       const sizeField = `${variant.size}`.padStart(maxNumberChars);
