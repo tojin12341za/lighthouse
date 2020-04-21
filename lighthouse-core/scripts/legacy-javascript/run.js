@@ -279,7 +279,7 @@ function createSummarySizes() {
     lines.push(path.relative(VARIANT_DIR, variantGroupFolder));
 
     const variants = [];
-    for (const variantFolder of glob.sync(`${variantGroupFolder}/**/main.bundle.min.js `)) {
+    for (const variantFolder of glob.sync(`${variantGroupFolder}/**/main.bundle.min.js `).sort()) {
       const size = fs.readFileSync(variantFolder).length;
       variants.push({name: path.relative(variantGroupFolder, variantFolder), size});
     }
