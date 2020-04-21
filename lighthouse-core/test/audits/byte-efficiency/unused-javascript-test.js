@@ -109,10 +109,6 @@ describe('UnusedJavaScript audit', () => {
       options: {
         // Default threshold is 512, but is lowered here so that squoosh generates more
         // results.
-        // TODO(cjamcl): the bundle visualization feature will require most of the logic currently
-        // done in unused-javascript to be moved to a computed artifact. When that happens, these
-        // tests will go there, and the artifact will not have any thresholds (filtering will happen
-        // within the audits), so this test will not need a threshold. Until then, it does.
         bundleSourceUnusedThreshold: 100,
       },
     };
