@@ -11,9 +11,6 @@ const LHElement = require('../../lib/lh-element.js');
 const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
 
-const redirectDevtoolsLog = /** @type {LH.Protocol.RawEventMessage[]} */ (
-  require('../fixtures/wikipedia-redirect.devtoolslog.json'));
-
 /* eslint-env jest */
 
 jest.useFakeTimers();
