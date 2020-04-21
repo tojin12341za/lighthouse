@@ -51,7 +51,7 @@ class Driver {
     this._eventEmitter = /** @type {CrdpEventEmitter} */ (new EventEmitter());
     this._connection = connection;
     // Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
-    this._devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
+    this._devtoolsLog = new DevtoolsLog(/^(Page|Network|Audits)\./);
     this.online = true;
     /** @type {Map<string, number>} */
     this._domainEnabledCounts = new Map();
