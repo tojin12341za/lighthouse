@@ -106,6 +106,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       // Augment with bundle data.
       if (bundle && unusedJsSummary.sourcesWastedBytes) {
         const topUnusedSourceSizes = Object.entries(unusedJsSummary.sourcesWastedBytes)
+          .sort((a, b) => b[1] - a[1])
           .slice(0, 5)
           .map(([source, unused]) => {
             const total =
