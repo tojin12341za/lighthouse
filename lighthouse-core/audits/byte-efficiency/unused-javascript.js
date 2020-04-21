@@ -93,7 +93,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
       const transfer = ByteEfficiencyAudit
         .estimateTransferSize(networkRecord, unusedJsSummary.totalBytes, 'Script');
-      if (transfer <= IGNORE_THRESHOLD_IN_BYTES) continue;
       const transferRatio = transfer / unusedJsSummary.totalBytes;
       const item = {
         url: unusedJsSummary.url,
@@ -101,6 +100,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,
       };
+
+      if (item.wastedBytes <= IGNORE_THRESHOLD_IN_BYTES) continue;
 
       // Augment with bundle data.
       if (bundle && unusedJsSummary.sourcesWastedBytes) {
