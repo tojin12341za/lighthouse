@@ -66,7 +66,8 @@ declare global {
       wastedPercent?: number;
     }
 
-    // TODO(bckenny): maybe remove some of the `| string` parts?
+    // TODO: consider making some of the `string | IcuMessage` into just `IcuMessage` to require i18n.
+
     /** The shared properties of an Audit.Product whether it has a numericValue or not. We want to enforce `numericUnit` accompanying `numericValue` whenever it is set, so the final Audit.Product type is a discriminated union on `'numericValue' in audit`*/
     interface ProductBase {
       /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */

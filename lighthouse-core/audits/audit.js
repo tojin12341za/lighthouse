@@ -222,7 +222,7 @@ class Audit {
 
   /**
    * @param {typeof Audit} audit
-   * @param {string} errorMessage
+   * @param {string | LH.IcuMessage} errorMessage
    * @return {LH.Icu<LH.Audit.Result>}
    */
   static generateErrorAuditResult(audit, errorMessage) {

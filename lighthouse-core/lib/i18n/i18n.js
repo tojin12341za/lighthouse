@@ -42,7 +42,6 @@ const DEFAULT_LOCALE = 'en';
   }
 })();
 
-/** @type {Record<string, string>} */
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
   ms: '{timeInMs, number, milliseconds}\xa0ms',
@@ -262,7 +261,7 @@ function _preformatValues(messageFormatter, values, icuMessage) {
 }
 
 /**
- * Format `values` based on the given `locale` and insert them into `message`.
+ * Format string `message` by localizing `values` and inserting them.
  * @param {string} message
  * @param {Record<string, string | number>} values
  * @param {LH.Locale} locale
@@ -341,12 +340,18 @@ function getRendererFormattedStrings(locale) {
 }
 
 /**
- * Returns a function that generates `LH.IcuMessage` objects to localize elements
- * of the given `fileStrings`.
+ * Returns a function that generates `LH.IcuMessage` objects to localize the
+ * messages in `fileStrings` and the shared `i18n.UIStrings`.
  * @param {string} filename
  * @param {Record<string, string>} fileStrings
  */
 function createMessageInstanceIdFn(filename, fileStrings) {
+  /**
+   * Combined so fn can access both caller's strings and i18n.UIStrings shared across LH.
+   * @type {Record<string, string>}
+   */
+  const mergedStrings = {...UIStrings, ...fileStrings};
+
   /**
    * Convert a message string and replacement values into an `LH.IcuMessage`.
    * @param {string} message
@@ -354,12 +359,7 @@ function createMessageInstanceIdFn(filename, fileStrings) {
    * @return {LH.IcuMessage}
    */
   const getIcuMessageFn = (message, values) => {
-    // First look in caller's strings.
-    let keyname = Object.keys(fileStrings).find(key => fileStrings[key] === message);
-    if (!keyname) {
-      // Otherwise look in shared i18n.UIStrings.
-      keyname = Object.keys(UIStrings).find(key => UIStrings[key] === message);
-    }
+    const keyname = Object.keys(mergedStrings).find(key => mergedStrings[key] === message);
     if (!keyname) throw new Error(`Could not locate: ${message}`);
 
     const filenameToLookup = keyname in fileStrings ? filename : __filename;

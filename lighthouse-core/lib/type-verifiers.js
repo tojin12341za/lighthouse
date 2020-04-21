@@ -5,10 +5,14 @@
  */
 'use strict';
 
-// TODO(bckenny): move budget.js to use these
-// TODO: could auto-generate these with something like io-ts.
+/**
+ * @fileoverview A collection of general type verification functions for dealing
+ * with external data. If these grow in scope they could be auto-generated with
+ * something like `io-ts`, but it's not worth the complexity yet.
+ */
 
 /**
+ * Type predicate verifying `val` is an object (excluding `Array` and `null`).
  * @param {unknown} val
  * @return {val is Record<string, unknown>}
  */
@@ -17,6 +21,7 @@ function isObjectOfUnknownValues(val) {
 }
 
 /**
+ * Type predicate verifying `val` is an object or an array.
  * @param {unknown} val
  * @return {val is Record<string, unknown>|Array<unknown>}
  */
