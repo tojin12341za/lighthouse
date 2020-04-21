@@ -6,7 +6,6 @@
 'use strict';
 
 const makeComputedArtifact = require('./computed-artifact.js');
-// const ByteEfficiencyAudit = require('../audits/byte-efficiency/byte-efficiency-audit.js');
 
 /**
  * @typedef WasteData
