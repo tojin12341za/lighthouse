@@ -66,7 +66,7 @@ class TraceNodes extends Gatherer {
     if (lcpNodeId) {
       backendNodeIds.push(lcpNodeId);
     }
-    // The call below is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
+    // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds
     await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
     const translatedIds = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend',
       {backendNodeIds: backendNodeIds});
