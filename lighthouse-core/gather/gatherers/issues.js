@@ -6,3 +6,31 @@
 'use strict';
 
 const Gatherer = require('./gatherer.js');
+
+/**
+ * @fileoverview Capture IssueAdded events
+ */
+class Issues extends Gatherer {
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   */
+  async beforePass(passContext) {
+    await passContext.driver.sendCommand('Audits.enable');
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   * @return {Promise<LH.Artifacts['Issues']>}
+   */
+  async afterPass(passContext, loadData) {
+    const driver = passContext.driver;
+    const devtoolsLog = loadData.devtoolsLog;
+    const issues = devtoolsLog.filter(event => event.method === 'Audits.issueAdded');
+
+    await driver.sendCommand('Audits.disable');
+    return issues;
+  }
+}
+
+module.exports = Issues;
